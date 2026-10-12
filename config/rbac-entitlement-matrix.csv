@@ -2,6 +2,7 @@ JobRole,Department,SecurityGroup,Resource,Permission,Status
 Finance Analyst,Finance,SG-FIN-READ,Northstar Finance SharePoint,Read,Implemented
 Finance Manager,Finance,SG-FIN-EDIT,Northstar Finance SharePoint,Edit,Implemented
 HR Specialist,Human Resources,SG-HR-EDIT,Northstar HR SharePoint,Edit,Implemented
-Sales Representative,Sales,SG-SALES-READ,Northstar Sales SharePoint,Read,Planned
+Sales Representative,Sales,SG-SALES-READ,Northstar Sales SharePoint,Read,Implemented
+Sales Manager,Sales,SG-SALES-EDIT,Northstar Sales SharePoint,EDIT,Implemented
 IT Support,IT,SG-IT-EDIT,Northstar IT SharePoint,Edit,Planned
 Project Contractor,Contractors,SG-PROJECT-READ,Assigned Project SharePoint,Read,Planned
