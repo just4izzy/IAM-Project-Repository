@@ -146,3 +146,80 @@ Together with Test 001, these results validate the intended distinction between 
 - Simulate promoting a Finance Analyst to Finance Manager.
 - Verify that previous group memberships are removed during role changes.
 - Validate effective permissions after employee transfers.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 003: HR Specialist Access Validation
+
+### 1. Objective
+
+Validate role-based access control (RBAC) by granting an HR Specialist
+Edit permissions to HR documents while restricting access to Finance
+resources.
+
+The purpose of this test was to verify departmental access separation
+and enforce the principle of least privilege.
+
+### 2. Configuration
+
+The following components were configured:
+
+- **Test User:** Olivia Bennett
+- **Department:** Human Resources
+- **Job Role:** HR Specialist
+- **Security Group:** `SG-HR-EDIT`
+- **SharePoint Site:** Northstar HR
+- **SharePoint Permission Group:** Northstar HR Members
+- **Permission Level:** Edit
+- **Test Resource:** HR Employee Records test document
+
+Olivia Bennett was added to the `SG-HR-EDIT` security group.
+
+The security group was added to the Northstar HR Members SharePoint
+group, granting access through group membership rather than
+individual permission assignments.
+
+### 3. Expected Results
+
+Olivia Bennett should be able to:
+
+- Access the Northstar HR SharePoint site.
+- View HR documents.
+- Edit and save changes to HR documents.
+- Delete disposable HR test documents.
+- Be denied access to the Northstar Finance SharePoint site.
+
+### 4. Actual Results
+
+| Test Action | Expected Result | Actual Result | Status |
+|---|---|---|---|
+| Access Northstar HR site | Allowed | Allowed | PASS |
+| View HR test document | Allowed | Allowed | PASS |
+| Edit and save HR document | Allowed | Allowed | PASS |
+| Delete HR test document | Allowed | Allowed | PASS |
+| Access Northstar Finance site | Denied | Denied | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 5/5 checks successful**
+
+The HR Specialist RBAC configuration functioned as intended.
+
+Olivia Bennett successfully accessed, viewed, edited, and deleted
+documents within the Northstar HR SharePoint site.
+
+Olivia was also denied access to the Northstar Finance SharePoint
+site.
+
+This test demonstrated successful group-based access control,
+least-privilege access, and departmental access separation
+for the tested resources.
+
+### 6. Future Testing
+
+- Verify that Finance employees cannot access HR resources.
+- Test HR access revocation.
+- Validate employee transfers between departments.
+- Investigate additional restrictions for sensitive HR records.
