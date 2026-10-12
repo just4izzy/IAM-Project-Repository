@@ -515,3 +515,86 @@ Mover lifecycle.
 - Test transfers involving multiple security groups.
 - Validate access propagation and potential delays.
 - Implement logging and approval verification for role changes.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 008: Leaver Lifecycle Management
+
+### 1. Objective
+
+Validate the employee offboarding (Leaver) process by disabling
+an employee's identity, revoking sign-in sessions, and removing
+departmental security group memberships.
+
+Ensure that a departing employee can no longer authenticate
+or retain assigned access to company resources.
+
+### 2. Business Scenario
+
+Taylor Morgan, a Finance Analyst at Northstar Financial Services,
+is leaving the organization.
+
+A simulated HR termination request requires IT to revoke
+the employee's access.
+
+**Employee Details:**
+
+- **Employee:** Taylor Morgan
+- **Department:** Finance
+- **Job Role:** Finance Analyst
+- **Security Group:** `SG-FIN-READ`
+- **Resource:** Northstar Finance SharePoint site
+- **Offboarding Type:** Simulated termination
+
+### 3. Implementation
+
+The following actions were performed manually:
+
+1. Located Taylor Morgan in Microsoft Entra ID.
+2. Disabled the employee's account.
+3. Revoked the employee's sign-in sessions.
+4. Removed Taylor from `SG-FIN-READ`.
+5. Attempted a new sign-in using a private browser.
+6. Verified that `SG-FIN-READ` was no longer assigned.
+
+The employee account was retained for future lab testing.
+
+### 4. Test Results
+
+| Test Action | Expected | Actual | Status |
+|---|---|---|---|
+| Disable Entra ID account | Disabled | Disabled | PASS |
+| Revoke sign-in sessions | Action completed | Action completed | PASS |
+| Remove Finance security group | Removed | Removed | PASS |
+| Attempt new authentication | Blocked | Blocked | PASS |
+| Verify Finance group removal | Absent | Absent | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 5/5 checks successful**
+
+Taylor Morgan's account was successfully disabled,
+sign-in sessions were revoked, and Finance security group
+membership was removed.
+
+A new authentication attempt was blocked, confirming
+that the account could not establish a new sign-in session.
+
+The employee's Finance entitlement was also verified
+as removed.
+
+This test demonstrated account deactivation,
+session revocation, and entitlement removal during
+the Leaver lifecycle.
+
+Note: Existing access-token expiration and access
+to external applications were not separately tested.
+
+### 6. Future Testing
+
+- Automate offboarding using Microsoft Graph PowerShell.
+- Implement audit logging for account changes.
+- Review application access and license reclamation.
+- Test reactivation without restoring previous entitlements.
