@@ -292,3 +292,66 @@ resources.
 - Validate access revocation.
 - Test employee promotions between Sales roles.
 - Verify access changes during departmental transfers.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 005: IT Support RBAC Validation
+
+### 1. Objective
+
+Validate that an IT Support Specialist can access and manage
+IT documentation without receiving unnecessary access to
+other departmental resources.
+
+### 2. Configuration
+
+- **Test User:** Noah Carter
+- **Department:** IT
+- **Job Role:** IT Support Specialist
+- **Security Group:** `SG-IT-EDIT`
+- **SharePoint Site:** Northstar IT
+- **SharePoint Group:** Northstar IT Members
+- **Permission Level:** Edit
+
+Noah Carter was added to the `SG-IT-EDIT` security group,
+which was granted Edit access through Northstar IT Members.
+
+### 3. Expected Results
+
+- Access Northstar IT SharePoint.
+- View, edit, and delete IT documents.
+- Be denied access to HR, Finance, and Sales sites.
+
+### 4. Actual Results
+
+| Test Action | Expected | Actual | Status |
+|---|---|---|---|
+| Access Northstar IT | Allowed | Allowed | PASS |
+| View IT documents | Allowed | Allowed | PASS |
+| Edit IT documents | Allowed | Allowed | PASS |
+| Delete IT documents | Allowed | Allowed | PASS |
+| Access Northstar HR | Denied | Denied | PASS |
+| Access Northstar Finance | Denied | Denied | PASS |
+| Access Northstar Sales | Denied | Denied | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 7/7 checks successful**
+
+The IT Support RBAC configuration functioned as intended.
+
+Noah Carter received Edit permissions for Northstar IT
+resources while being restricted from HR, Finance, and Sales
+SharePoint sites during testing.
+
+This demonstrated least-privilege access and departmental
+access separation for the tested resources.
+
+### 6. Future Testing
+
+- Test employee role changes and access revocation.
+- Validate IT access removal during offboarding.
+- Explore least-privilege administrative role assignments
+  separately from SharePoint permissions.
