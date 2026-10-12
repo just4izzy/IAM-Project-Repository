@@ -223,3 +223,72 @@ for the tested resources.
 - Test HR access revocation.
 - Validate employee transfers between departments.
 - Investigate additional restrictions for sensitive HR records.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 004: Sales Department RBAC Validation
+
+### 1. Objective
+
+Validate role-based access control (RBAC) for two Sales employees
+with different permission requirements.
+
+Verify that Sales employees can access their assigned resources
+without receiving unauthorized access to Finance or HR.
+
+### 2. Configuration
+
+**Sales Representative**
+- Test User: Christopher Oneil
+- Security Group: `SG-SALES-READ`
+- SharePoint Group: Northstar Sales Visitors
+- Permission Level: Read
+
+**Sales Manager**
+- Test User: Roger Pratt
+- Security Group: `SG-SALES-EDIT`
+- SharePoint Group: Northstar Sales Members
+- Permission Level: Edit
+
+**Resource:** Northstar Sales SharePoint site
+
+### 3. Expected Results
+
+- Sales Representatives can view documents but cannot edit or delete them.
+- Sales Managers can view, edit, and delete documents.
+- Neither role should have access to Finance or HR resources.
+
+### 4. Actual Results
+
+| Test Action | Christopher Oneil | Roger Pratt |
+|---|---|---|
+| View Sales documents | PASS - Allowed | PASS - Allowed |
+| Edit Sales documents | PASS - Denied | PASS - Allowed |
+| Delete Sales documents | PASS - Denied | PASS - Allowed |
+| Access Finance site | PASS - Denied | PASS - Denied |
+| Access HR site | PASS - Denied | PASS - Denied |
+
+### 5. Conclusion
+
+**Test Result: PASS**
+
+Both Sales accounts demonstrated their expected role-based
+permissions.
+
+Christopher Oneil received read-only access, while Roger Pratt
+received Edit access.
+
+Both accounts were restricted from accessing the Finance and HR
+SharePoint sites during testing.
+
+These results demonstrate successful departmental access
+separation and least-privilege configuration for the tested
+resources.
+
+### 6. Future Testing
+
+- Validate access revocation.
+- Test employee promotions between Sales roles.
+- Verify access changes during departmental transfers.
