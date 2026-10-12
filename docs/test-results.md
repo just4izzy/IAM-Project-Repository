@@ -434,3 +434,84 @@ validation during the Joiner lifecycle.
 - Test employee role changes through the Mover lifecycle.
 - Test access revocation through the Leaver lifecycle.
 - Document account and entitlement changes for auditing.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 007: Mover Lifecycle Management
+
+### 1. Objective
+
+Validate the employee transfer (Mover) process by updating
+an existing employee's identity attributes and access permissions.
+
+Ensure that the employee receives access appropriate for their
+new role while losing access associated with their previous role.
+
+### 2. Business Scenario
+
+Avery Stone transfers from Finance to Human Resources.
+
+**Previous Position:**
+- Department: Finance
+- Job Title: Finance Analyst
+- Security Group: `SG-FIN-READ`
+- SharePoint Access: Northstar Finance (Read)
+
+**New Position:**
+- Department: Human Resources
+- Job Title: HR Specialist
+- Security Group: `SG-HR-EDIT`
+- SharePoint Access: Northstar HR (Edit)
+
+The employee's previous Finance access must be revoked as
+part of the transfer.
+
+### 3. Implementation
+
+1. Updated Avery Stone's Department to Human Resources.
+2. Updated the Job Title to HR Specialist.
+3. Removed Avery from `SG-FIN-READ`.
+4. Added Avery to `SG-HR-EDIT`.
+5. Signed in using Avery's account to validate permissions.
+6. Reviewed group memberships to confirm the expected access.
+
+All changes were performed manually through Microsoft Entra ID.
+
+### 4. Test Results
+
+| Test Action | Expected | Actual | Status |
+|---|---|---|---|
+| Department updated | Human Resources | Human Resources | PASS |
+| Job title updated | HR Specialist | HR Specialist | PASS |
+| Remove old Finance group | Removed | Removed | PASS |
+| Add new HR group | Added | Added | PASS |
+| Access HR SharePoint | Allowed | Allowed | PASS |
+| Edit HR documents | Allowed | Allowed | PASS |
+| Access Finance SharePoint | Denied | Denied | PASS |
+| Verify group memberships | Correct | Correct | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 8/8 checks successful**
+
+Avery Stone was successfully transferred from Finance Analyst
+to HR Specialist.
+
+The employee's identity attributes and security group
+memberships were updated to reflect the new role.
+
+Testing confirmed that Avery gained HR Edit access and lost
+her previous Finance access.
+
+This demonstrated manual access revocation, entitlement
+reconciliation, and least-privilege enforcement during the
+Mover lifecycle.
+
+### 6. Future Testing
+
+- Automate role changes using Microsoft Graph PowerShell.
+- Test transfers involving multiple security groups.
+- Validate access propagation and potential delays.
+- Implement logging and approval verification for role changes.
