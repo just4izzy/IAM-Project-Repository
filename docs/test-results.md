@@ -355,3 +355,82 @@ access separation for the tested resources.
 - Validate IT access removal during offboarding.
 - Explore least-privilege administrative role assignments
   separately from SharePoint permissions.
+
+&nbsp;
+---
+&nbsp;
+
+
+## Test 006: Joiner Lifecycle Management
+
+### 1. Objective
+
+Validate the employee onboarding (Joiner) process by provisioning
+a new identity in Microsoft Entra ID and assigning access based
+on the organization's RBAC entitlement matrix.
+
+Verify that the employee receives only the permissions required
+for their assigned job role.
+
+### 2. Business Scenario
+
+Northstar Financial Services hires a new Finance Analyst.
+
+A simulated HR onboarding request specifies that the employee
+requires read-only access to Finance documents.
+
+**New Employee Details:**
+
+- **Employee:** Taylor Morgan
+- **Department:** Finance
+- **Job Role:** Finance Analyst
+- **Security Group:** `SG-FIN-READ`
+- **Required Permission:** Read
+- **Target Resource:** Northstar Finance SharePoint
+
+### 3. Provisioning Process
+
+1. Reviewed the simulated onboarding request.
+2. Identified the appropriate security group using the RBAC matrix.
+3. Created Taylor Morgan's account in Microsoft Entra ID.
+4. Verified that the account could authenticate but could not
+   access Northstar Finance before group assignment.
+5. Added Taylor Morgan to `SG-FIN-READ`.
+6. Verified Finance access after group assignment.
+7. Tested document permissions and departmental access restrictions.
+
+### 4. Test Results
+
+| Test Action | Expected | Actual | Status |
+|---|---|---|---|
+| Finance access before group assignment | Denied | Denied | PASS |
+| Finance access after group assignment | Allowed | Allowed | PASS |
+| View Finance document | Allowed | Allowed | PASS |
+| Edit Finance document | Denied | Denied | PASS |
+| Delete Finance document | Denied | Denied | PASS |
+| Access HR SharePoint | Denied | Denied | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 6/6 checks successful**
+
+Taylor Morgan was successfully provisioned with the access
+required for the Finance Analyst role.
+
+Before security group assignment, the account could not access
+Northstar Finance.
+
+After joining `SG-FIN-READ`, the account received read-only
+access to Finance documents while remaining restricted from
+editing, deleting, and accessing the HR SharePoint site.
+
+This test demonstrated successful identity provisioning,
+group-based authorization, and least-privilege access
+validation during the Joiner lifecycle.
+
+### 6. Future Testing
+
+- Automate user provisioning using Microsoft Graph PowerShell.
+- Test employee role changes through the Mover lifecycle.
+- Test access revocation through the Leaver lifecycle.
+- Document account and entitlement changes for auditing.
