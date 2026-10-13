@@ -598,3 +598,69 @@ to external applications were not separately tested.
 - Implement audit logging for account changes.
 - Review application access and license reclamation.
 - Test reactivation without restoring previous entitlements.
+
+&nbsp;
+---
+&nbsp;
+
+
+## Test 009: Excess Access Detection and Remediation
+
+### 1. Objective
+
+Validate that the Northstar RBAC Compliance Checker can
+identify unauthorized security group memberships and
+confirm successful remediation.
+
+### 2. Business Scenario
+
+Christopher Oneil, a Sales Representative, is accidentally
+assigned access to Finance resources.
+
+According to Northstar's RBAC entitlement matrix, Christopher
+should only belong to `SG-SALES-READ`.
+
+The additional `SG-FIN-READ` membership represents an
+unauthorized entitlement.
+
+### 3. Implementation
+
+1. Confirmed Christopher's initial compliant access.
+2. Added Christopher to `SG-FIN-READ` for testing.
+3. Executed `Test-NorthStarRBACCompliance.ps1`.
+4. Confirmed that the script reported `EXCESS ACCESS`.
+5. Removed Christopher from `SG-FIN-READ`.
+6. Ran the compliance checker again.
+7. Verified that Christopher returned to `COMPLIANT`.
+
+### 4. Test Results
+
+| Test Action | Expected | Actual | Status |
+|---|---|---|---|
+| Initial access audit | COMPLIANT | COMPLIANT | PASS |
+| Add unauthorized Finance group | Excess entitlement present | Present | PASS |
+| Run compliance checker | EXCESS ACCESS | EXCESS ACCESS | PASS |
+| Remove unauthorized Finance group | Removed | Removed | PASS |
+| Run remediation verification | COMPLIANT | COMPLIANT | PASS |
+
+### 5. Conclusion
+
+**Test Result: PASS — 5/5 checks successful**
+
+The Northstar RBAC Compliance Checker successfully identified
+an unauthorized Finance security group membership assigned
+to a Sales Representative.
+
+After the unauthorized membership was removed, the script
+confirmed that the employee's access returned to the
+approved RBAC configuration.
+
+This demonstrated automated entitlement reconciliation,
+excess access detection, and remediation verification.
+
+### 6. Future Improvements
+
+- Add error handling for missing configuration files.
+- Export compliance results to CSV.
+- Detect missing required access through controlled testing.
+- Expand auditing to additional employees and resources.
