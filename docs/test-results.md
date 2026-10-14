@@ -664,3 +664,51 @@ excess access detection, and remediation verification.
 - Export compliance results to CSV.
 - Detect missing required access through controlled testing.
 - Expand auditing to additional employees and resources.
+
+&nbsp;
+---
+&nbsp;
+
+
+## Test 010 — Automated Joiner Provisioning
+
+**Objective:** Validate automated employee onboarding using Microsoft Graph PowerShell and role-based access control.
+
+**Test Identity:** Emma Wilson  
+**Department:** Finance  
+**Job Role:** Finance Analyst  
+**Required Security Group:** SG-FIN-READ
+
+### Procedure
+1. Created a simulated, approved onboarding request in CSV format.
+2. Executed the Joiner script in dry-run mode.
+3. Validated the employee's role against the RBAC entitlement matrix.
+4. Verified the proposed UPN was available.
+5. Confirmed the required security group existed.
+6. Executed the provisioning workflow using `-Execute`.
+7. Created the employee account in a disabled state.
+8. Assigned the employee to SG-FIN-READ.
+9. Confirmed the account was disabled and assigned to the intended security group.
+
+### Expected Result
+- Employee account created successfully.
+- Account remains disabled pending activation.
+- Employee receives only the required Finance read-only security group.
+
+### Actual Result
+- Employee account created successfully.
+- Account confirmed disabled.
+- SG-FIN-READ membership confirmed.
+
+**Result: PASS**
+
+### Security Controls
+- Default dry-run execution
+- Explicit `-Execute` switch required for live provisioning
+- Simulated onboarding approval validation
+- Duplicate identity checks
+- RBAC-driven group assignment
+- Error handling for partial provisioning
+- Post-provisioning account and group membership verification
+
+**Limitations:** Approval was simulated through a CSV field. The workflow was tested in a lab environment and is not a production HR integration.
