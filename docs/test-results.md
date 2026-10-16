@@ -712,3 +712,72 @@ excess access detection, and remediation verification.
 - Post-provisioning account and group membership verification
 
 **Limitations:** Approval was simulated through a CSV field. The workflow was tested in a lab environment and is not a production HR integration.
+
+&nbsp;
+---
+&nbsp;
+
+## Test 011: Automated Mover
+
+**Scenario:** Promote an employee from Sales Representative to Sales Manager.
+
+**Test Employee:** Christopher Oneil
+
+**Automation:** `Move-NorthstarEmployee.ps1`
+
+**Expected Results:**
+- Employee's current role and permissions are validated.
+- `SG-SALES-READ` is removed.
+- `SG-SALES-EDIT` is assigned.
+- Job title is updated to Sales Manager.
+- Final account attributes and RBAC memberships are verified.
+
+**Actual Results:**
+- All validation checks passed.
+- `SG-SALES-READ` removed successfully.
+- `SG-SALES-EDIT` assigned successfully.
+- Job title updated to Sales Manager.
+- Changes independently verified using Microsoft Graph.
+
+**Status: PASSED**
+
+---
+
+## Test 012: Automated Leaver
+
+**Scenario:** Offboard an employee using the automated Leaver workflow.
+
+**Test Employee:** Christopher Oneil
+
+**Automation:** `Disable-NorthstarLeaver.ps1`
+
+**Expected Results:**
+- Approved offboarding request is validated.
+- Employee account is disabled.
+- Sign-in session revocation is requested.
+- Northstar RBAC group memberships are removed.
+- Final account status and group memberships are verified.
+
+**Actual Results:**
+- Request approval and employee identity validated.
+- Employee account disabled successfully.
+- Sign-in session revocation request accepted.
+- `SG-SALES-EDIT` membership removed.
+- Final RBAC verification passed.
+- Disabled account independently confirmed using Microsoft Graph.
+
+**Status: PASSED**
+
+---
+
+## JML Automation Testing Summary
+
+| Test | Workflow | Result |
+|------|----------|--------|
+| 010 | Automated Joiner | PASSED |
+| 011 | Automated Mover | PASSED |
+| 012 | Automated Leaver | PASSED |
+
+All three employee lifecycle automation workflows were successfully executed and validated in the Northstar Financial Services lab environment.
+
+Session revocation was confirmed as requested, not independently verified as fully propagated.
