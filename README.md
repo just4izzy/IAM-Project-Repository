@@ -103,6 +103,24 @@ The workflow:
 
 **Test:** Christopher Oneil's account was successfully disabled, and his managed RBAC memberships were removed.
 
+## Automation Documentation
+
+The implementation details, security controls, and verified lab outcomes are documented separately:
+
+- [Joiner automation](docs/joiner-automation.md) — Provisioning and role-based group assignment
+- [Mover automation](docs/mover-automation.md) — Role changes and entitlement reconciliation
+- [Leaver automation](docs/leaver-automation.md) — Account disabling and RBAC group removal
+
+The corresponding PowerShell scripts are available in the [scripts](scripts/) folder.
+
+## Reproducing the Lab
+
+The files in [requests](requests/) are **historical, simulated HR test requests** used during the completed lab exercises. An `Approved` entry represents simulated approval, not a new authorization to rerun a workflow.
+
+The Joiner, Mover, and Leaver requests have already been executed in the lab. Running `-Execute` again against the current tenant may fail validation or affect account state. To reproduce the tests, use new fictional test identities, review and update the request CSVs, and run the default dry-run mode before considering any live changes.
+
+These scripts use the relative project structure `scripts/`, `config/`, and `requests/` and require a configured Microsoft Graph PowerShell connection and suitable directory permissions.
+
 ## RBAC Compliance Auditing
 
 I also developed a PowerShell compliance-checking workflow that compares employee security group memberships against the RBAC entitlement matrix.
@@ -176,4 +194,4 @@ Continuing to develop my independent PowerShell scripting skills is one of my ne
 
 **Core IAM lab implementation and JML automation completed.**
 
-Documentation and repository organization are being finalized.
+Core documentation and repository organization completed; ongoing lab improvements and PowerShell learning continue.
