@@ -1,6 +1,6 @@
 
 # Northstar Financial Services
-# RBAC Compliance Checker - Version 2
+# RBAC Compliance Checker - Version 3
 # Read-only Microsoft Graph audit
 
 # Locate the RBAC entitlement matrix
@@ -46,6 +46,17 @@ foreach ($Rule in $RBAC) {
     }
 }
 
+# Only audit security groups explicitly governed by implemented RBAC rules.
+$ManagedGroupNames = @(
+    $RBAC |
+        Where-Object { $_.Status -eq "Implemented" } |
+        Select-Object -ExpandProperty SecurityGroup -Unique
+)
+
+if ($ManagedGroupNames.Count -eq 0) {
+    throw "No implemented RBAC security groups found in the matrix."
+}
+
 Write-Host "RBAC entitlement matrix loaded successfully."
 
 # Employees to audit
@@ -87,10 +98,11 @@ $Report = foreach ($EmployeeName in $Employees) {
         Select-Object -ExpandProperty DisplayName
     )
 
-    # Filter Northstar security groups
+    # Restrict the audit to groups explicitly managed by the RBAC matrix.
+    # Unrelated SG-* memberships are outside this policy's scope.
     $NorthstarGroups = @(
         $ActualGroups | Where-Object {
-            $_ -like "SG-*"
+            $_ -in $ManagedGroupNames
         }
     )
 
